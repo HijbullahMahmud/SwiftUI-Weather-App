@@ -10,31 +10,17 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         ZStack{
-            LinearGradient(gradient: Gradient(colors: [Color.blue, Color.white]), startPoint: .topLeading, endPoint: .bottomTrailing)
-                .edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
+            BackgroundView(topColor: Color.blue, bottomColor: Color("lightBlue"))
             VStack{
-                Text("Dhaka, Bangladesh")
-                    .font(.system(size: 32,
-                                  weight: .medium, design: .default))
-                    .padding()
-                    .foregroundColor(.white)
-                VStack(spacing: 10){
-                    Image(systemName: "cloud.sun.fill")
-                        .renderingMode(.original)
-                        .resizable()
-                        .aspectRatio(contentMode: /*@START_MENU_TOKEN@*/.fill/*@END_MENU_TOKEN@*/)
-                        .frame(width: 180, height: 180)
-                    Text("76°")
-                        .font(.system(size: 70, weight: .medium))
-                        .foregroundColor(.white)
-                }.padding(.bottom, 40)
+                CityTextView(cityName: "Dhaka, Bangladesh")
+                WeaterStatusView(imageName: "cloud.sun.fill", temperature: 41)
                 
                 HStack(spacing: 20){
-                 WeaterDayView(dayOfWeek: "TUE", imageName: "cloud.sun.fill", temperature: 76)
-                    WeaterDayView(dayOfWeek: "WED", imageName: "sun.rain.fill", temperature: 74)
-                    WeaterDayView(dayOfWeek: "THU", imageName: "sun.max.fill", temperature: 75)
-                    WeaterDayView(dayOfWeek: "FRI", imageName: "wind.snow", temperature: 72)
-                    WeaterDayView(dayOfWeek: "SAT", imageName: "snow", temperature: 60)
+                 WeaterDayView(dayOfWeek: "TUE", imageName: "cloud.sun.fill", temperature: 41)
+                    WeaterDayView(dayOfWeek: "WED", imageName: "sun.rain.fill", temperature: 39)
+                    WeaterDayView(dayOfWeek: "THU", imageName: "sun.max.fill", temperature: 42)
+                    WeaterDayView(dayOfWeek: "FRI", imageName: "sun.max.fill", temperature: 40)
+                    WeaterDayView(dayOfWeek: "SAT", imageName: "cloud.sun.fill", temperature: 40)
                 }
                 Spacer()
                 
@@ -74,9 +60,50 @@ struct WeaterDayView: View {
                 .resizable()
                 .aspectRatio(contentMode: /*@START_MENU_TOKEN@*/.fill/*@END_MENU_TOKEN@*/)
                 .frame(width: 40, height: 40)
-            Text("\(temperature)°")
+            Text("\(temperature)°C")
                 .font(.system(size: 28, weight: .medium))
                 .foregroundColor(.white)
         }
+    }
+}
+
+struct BackgroundView: View {
+    var topColor: Color
+    var bottomColor: Color
+    
+    var body: some View {
+        LinearGradient(gradient: Gradient(colors: [topColor, bottomColor]), startPoint: .topLeading, endPoint: .bottomTrailing)
+            .edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
+    }
+}
+
+struct CityTextView: View {
+    var cityName: String
+    
+    var body: some View {
+        Text(cityName)
+            .font(.system(size: 32,
+                          weight: .medium, design: .default))
+            .padding()
+            .foregroundColor(.white)
+    }
+}
+
+struct WeaterStatusView: View {
+    var imageName: String
+    var temperature: Int
+    
+    var body: some View {
+        VStack(spacing: 10){
+            Image(systemName: 
+        imageName)
+                .renderingMode(.original)
+                .resizable()
+                .aspectRatio(contentMode: /*@START_MENU_TOKEN@*/.fill/*@END_MENU_TOKEN@*/)
+                .frame(width: 180, height: 180)
+            Text("\(temperature)°C")
+                .font(.system(size: 70, weight: .medium))
+                .foregroundColor(.white)
+        }.padding(.bottom, 40)
     }
 }
